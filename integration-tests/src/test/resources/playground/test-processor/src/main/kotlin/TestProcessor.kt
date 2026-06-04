@@ -155,6 +155,9 @@ class TestProcessor : SymbolProcessor {
 //            setter.parameter.accept(this, "$data  ")
         }
 
+        override fun visitBackingField(backingField: KSBackingField, data: String) {
+        }
+
         override fun visitTypeArgument(typeArgument: KSTypeArgument, data: String) {
             if (checkVisited(typeArgument)) return
             typeArgument.annotations.forEach { it.accept(this, "$data  ") }
