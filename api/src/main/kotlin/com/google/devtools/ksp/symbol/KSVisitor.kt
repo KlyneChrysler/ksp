@@ -48,6 +48,8 @@ interface KSVisitor<D, R> {
 
     fun visitPropertySetter(setter: KSPropertySetter, data: D): R
 
+    fun visitBackingField(backingField: KSBackingField, data: D): R
+
     fun visitReferenceElement(element: KSReferenceElement, data: D): R
 
     fun visitTypeAlias(typeAlias: KSTypeAlias, data: D): R

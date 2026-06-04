@@ -31,7 +31,8 @@ open class KSVisitorVoid : KSVisitor<Unit, Unit> {
     override fun visitDeclarationContainer(
         declarationContainer: KSDeclarationContainer,
         data: Unit,
-    ) {}
+    ) {
+    }
 
     override fun visitDynamicReference(reference: KSDynamicReference, data: Unit) {}
 
@@ -50,6 +51,8 @@ open class KSVisitorVoid : KSVisitor<Unit, Unit> {
     override fun visitPropertyGetter(getter: KSPropertyGetter, data: Unit) {}
 
     override fun visitPropertySetter(setter: KSPropertySetter, data: Unit) {}
+
+    override fun visitBackingField(backingField: KSBackingField, data: Unit) {}
 
     override fun visitClassifierReference(reference: KSClassifierReference, data: Unit) {}
 
