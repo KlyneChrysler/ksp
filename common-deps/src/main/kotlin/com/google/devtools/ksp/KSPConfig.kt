@@ -17,6 +17,7 @@
 
 package com.google.devtools.ksp.processing
 
+import com.google.devtools.ksp.IncrementalContextLoggingOptions
 import java.io.File
 import java.io.Serializable
 
@@ -40,7 +41,7 @@ abstract class KSPConfig(
     val resourceOutputDir: File,
 
     val incremental: Boolean,
-    val incrementalLog: Boolean,
+    val incrementalContextLoggingOptions: IncrementalContextLoggingOptions,
     val modifiedSources: List<File>,
     val removedSources: List<File>,
     val changedClasses: List<String>,
@@ -71,6 +72,7 @@ abstract class KSPConfig(
 
         var incremental: Boolean = false
         var incrementalLog: Boolean = false
+        var incrementalLogDependencyGraphOrigin: String? = null
         var modifiedSources: List<File> = emptyList()
         var removedSources: List<File> = emptyList()
         var changedClasses: List<String> = emptyList()
@@ -107,7 +109,7 @@ class KSPJvmConfig(
     resourceOutputDir: File,
 
     incremental: Boolean,
-    incrementalLog: Boolean,
+    incrementalContextLoggingOptions: IncrementalContextLoggingOptions,
     modifiedSources: List<File>,
     removedSources: List<File>,
     changedClasses: List<String>,
@@ -136,7 +138,7 @@ class KSPJvmConfig(
     resourceOutputDir,
 
     incremental,
-    incrementalLog,
+    incrementalContextLoggingOptions,
     modifiedSources,
     removedSources,
     changedClasses,
@@ -180,7 +182,10 @@ class KSPJvmConfig(
                 resourceOutputDir,
 
                 incremental,
-                incrementalLog,
+                IncrementalContextLoggingOptions(
+                    incrementalLog,
+                    incrementalLogDependencyGraphOrigin,
+                ),
                 modifiedSources,
                 removedSources,
                 changedClasses,
@@ -215,7 +220,7 @@ class KSPNativeConfig(
     resourceOutputDir: File,
 
     incremental: Boolean,
-    incrementalLog: Boolean,
+    incrementalContextLoggingOptions: IncrementalContextLoggingOptions,
     modifiedSources: List<File>,
     removedSources: List<File>,
     changedClasses: List<String>,
@@ -244,7 +249,7 @@ class KSPNativeConfig(
     resourceOutputDir,
 
     incremental,
-    incrementalLog,
+    incrementalContextLoggingOptions,
     modifiedSources,
     removedSources,
     changedClasses,
@@ -279,7 +284,10 @@ class KSPNativeConfig(
                 resourceOutputDir,
 
                 incremental,
-                incrementalLog,
+                IncrementalContextLoggingOptions(
+                    incrementalLog,
+                    incrementalLogDependencyGraphOrigin,
+                ),
                 modifiedSources,
                 removedSources,
                 changedClasses,
@@ -314,7 +322,7 @@ class KSPJsConfig(
     resourceOutputDir: File,
 
     incremental: Boolean,
-    incrementalLog: Boolean,
+    incrementalContextLoggingOptions: IncrementalContextLoggingOptions,
     modifiedSources: List<File>,
     removedSources: List<File>,
     changedClasses: List<String>,
@@ -343,7 +351,7 @@ class KSPJsConfig(
     resourceOutputDir,
 
     incremental,
-    incrementalLog,
+    incrementalContextLoggingOptions,
     modifiedSources,
     removedSources,
     changedClasses,
@@ -378,7 +386,10 @@ class KSPJsConfig(
                 resourceOutputDir,
 
                 incremental,
-                incrementalLog,
+                IncrementalContextLoggingOptions(
+                    incrementalLog,
+                    incrementalLogDependencyGraphOrigin,
+                ),
                 modifiedSources,
                 removedSources,
                 changedClasses,
@@ -418,7 +429,7 @@ class KSPCommonConfig(
     resourceOutputDir: File,
 
     incremental: Boolean,
-    incrementalLog: Boolean,
+    incrementalContextLoggingOptions: IncrementalContextLoggingOptions,
     modifiedSources: List<File>,
     removedSources: List<File>,
     changedClasses: List<String>,
@@ -447,7 +458,7 @@ class KSPCommonConfig(
     resourceOutputDir,
 
     incremental,
-    incrementalLog,
+    incrementalContextLoggingOptions,
     modifiedSources,
     removedSources,
     changedClasses,
@@ -482,7 +493,10 @@ class KSPCommonConfig(
                 resourceOutputDir,
 
                 incremental,
-                incrementalLog,
+                IncrementalContextLoggingOptions(
+                    incrementalLog,
+                    incrementalLogDependencyGraphOrigin,
+                ),
                 modifiedSources,
                 removedSources,
                 changedClasses,
