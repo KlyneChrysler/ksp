@@ -24,6 +24,7 @@ import com.google.devtools.ksp.common.impl.KSNameImpl
 import com.google.devtools.ksp.containingFile
 import com.google.devtools.ksp.impl.KSPCoreEnvironment
 import com.google.devtools.ksp.impl.ResolverAAImpl
+import com.google.devtools.ksp.impl.recordClassReferenceLookup
 import com.google.devtools.ksp.impl.symbol.kotlin.resolved.KSAnnotationResolvedImpl
 import com.google.devtools.ksp.impl.symbol.kotlin.resolved.KSClassifierParameterImpl
 import com.google.devtools.ksp.impl.symbol.kotlin.resolved.KSClassifierReferenceResolvedImpl
@@ -745,7 +746,10 @@ internal fun KaAnnotationValue.toValue(parent: KSNode? = null, origin: Origin? =
     } ?: KSErrorType
 
     is KaAnnotationValue.ClassLiteralValue -> {
-        KSTypeImpl.getCached(this@toValue.type)
+        parent?.let { ctx ->
+            recordClassReferenceLookup(type, ctx)
+        }
+        KSTypeImpl.getCached(type)
     }
 
     is KaAnnotationValue.ConstantValue -> this.value.value

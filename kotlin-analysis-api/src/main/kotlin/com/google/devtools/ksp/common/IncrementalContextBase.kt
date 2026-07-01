@@ -610,8 +610,15 @@ internal class DirtinessPropagator(
         visitedFiles.add(file)
 
         // Propagate by dependencies
-        symbolsMap[file]?.forEach {
-            visit(it)
+        if (isClassLiteralReferenceInAnnotationArgument(file)) {
+            val fqn = file.path.removePrefix(noSourceFilePrefix).removeSuffix(noSourceFileSuffix)
+            val name = fqn.substringAfterLast('.')
+            val scope = fqn.substringBeforeLast('.', "<anonymous>")
+            visit(LookupSymbolWrapper(name, scope))
+        } else {
+            symbolsMap[file]?.forEach {
+                visit(it)
+            }
         }
 
         // Propagate by input-output relations
@@ -629,5 +636,18 @@ internal class DirtinessPropagator(
     fun propagate(initialSet: Collection<File>): Set<File> {
         initialSet.forEach { visit(it) }
         return visitedFiles
+    }
+
+    private val noSourceFilePrefix = "<NoSourceFile for "
+    private val noSourceFileSuffix = " is a virtual file; DO NOT USE.>"
+
+    /**
+     * Returns `true` if the file represents is a class literal reference in an annotation argument.
+     */
+    private fun isClassLiteralReferenceInAnnotationArgument(file: File): Boolean {
+        return file != anyChangesWildcard &&
+            file != removedOutputsKey &&
+            file.path.startsWith(noSourceFilePrefix) &&
+            file.path.endsWith(noSourceFileSuffix)
     }
 }
